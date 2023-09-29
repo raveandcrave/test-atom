@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { ModalProvider } from "@/components/providers/ModalProvider";
+import { SessionProvider } from "@/components/providers/SessionProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>
-          <ModalProvider />
-          {children}
-        </QueryProvider>
+        <SessionProvider>
+          <AuthProvider>
+            <QueryProvider>
+              <ModalProvider />
+              {children}
+            </QueryProvider>
+          </AuthProvider>
+        </SessionProvider>
       </body>
     </html>
   );
